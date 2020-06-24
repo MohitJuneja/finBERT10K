@@ -303,14 +303,9 @@ def get_10q(text_link):
     return desired_items
 
 def get_10k_edgecase(text_link):
-    print(text_link)
     # r = requests.get('https://www.sec.gov/Archives/edgar/data/320193/000032019318000145/0000320193-18-000145.txt')
     r = requests.get(text_link)
     raw_10k = r.text
-
-    # print(raw_10k)
-    # print(text_link)
-
 
 
 
@@ -356,26 +351,18 @@ def get_10k_edgecase(text_link):
     #                         r'(ITEM(\s)(1A|1B|2|7A|7|8|9)\s-\s)|'
     #                         r'(ITEM(\s|&#160;|&nbsp;)(1A|1B|2|7A|7|8|9))')
     # regex_item = re.compile(r'(font-weight:bold;">Item(\s|&#160;|&nbsp;))')
-    regex_item = re.compile(r'(Item\s7\.\s{0,3}MANAGEMENT\'S)|'
-                            r'(Item\s8\.\s{0,2}CONSOLIDATED)|'
-                            r'(Item\s7A\.\s{0,2}QUANTITATIVE)')
+    regex_item = re.compile(r'((Item|ITEM)\s7\.\s{0,3}MANAGEMENT\'S)|'
+                            r'((Item|ITEM)\s8\.\s{0,3}CONSOLIDATED)|'
+                            r'((Item|ITEM)\s7A\.\s{0,3}QUANTITATIVE)|'
+                            r'((Item|ITEM)\s1A\.\s{0,3}RISK)')
 
 
-    # print(document['10-K'])
     ## find item section
     items_matches = regex_item.finditer(document['10-K'])
     items_df = pd.DataFrame([(x.group(), x.start(), x.end()) for x in items_matches])
 
 
-
-    print("items df")
-    print(items_df)
-
-
-
     desired_items = {}
-
-
     if len(list(items_df)) >0:
 
         items_matches = regex_item.finditer(document['10-K'])
@@ -388,8 +375,6 @@ def get_10k_edgecase(text_link):
         items_df.replace('-', '', regex=True, inplace=True)
         items_df.replace('\>','',regex=True,inplace=True)
         items_df.replace('&#(160|150|151);','',regex=True,inplace=True)
-        # items_df.replace('&#150;','',regex=True,inplace=True)
-        # items_df.replace('&#151;','',regex=True,inplace=True)
         items_df.replace('&nbsp;', '', regex=True, inplace=True)
         items_df.replace('\.', '', regex=True, inplace=True)
         items_df.replace(' ', '', regex=True, inplace=True)
@@ -402,17 +387,18 @@ def get_10k_edgecase(text_link):
         items_df.replace('<', '', regex=True, inplace=True)
         items_df.replace('consolidated', '', regex=True, inplace=True)
         items_df.replace('quantitative', '', regex=True, inplace=True)
+        items_df.replace('risk', '', regex=True, inplace=True)
 
-        print("before dedup items_df")
-        print(items_df)
+        # print("before dedup items_df")
+        # print(items_df)
 
         ## deduping based on sum of difference in index/ approx words count
         # between items to distiguish which belongs to table of contents, references and Actual Items
 
         items_df = dedup(items_df)
 
-        print("after dedup items_df")
-        print(items_df)
+        # print("after dedup items_df")
+        # print(items_df)
 
 
         items_df.set_index('item', inplace=True)
@@ -421,24 +407,21 @@ def get_10k_edgecase(text_link):
         items_df.sort_values(by='st', ascending=True, inplace=True)
 
         ## check if there are items referenced in other sections
-        for i, (item, row) in enumerate(items_df.iloc[1:-1].iterrows()):
-            # print(item)
-            # print(items_df)
-            # print(items_df.iloc[i-1], "\n")
-            if sorted([items_df.iloc[i-1].name, item, items_df.iloc[i+1].name]) \
-                    == [item, items_df.iloc[i-1].name, items_df.iloc[i+1].name] and \
-                    item != items_df.iloc[i+1].name:
-                print(f"previous section has been referenced!!!!: check {item}")
-                print(items_df)
-            else:
-                pass
+        # for i, (item, row) in enumerate(items_df.iloc[1:-1].iterrows()):
+        #     # print(item)
+        #     # print(items_df)
+        #     # print(items_df.iloc[i-1], "\n")
+        #     if sorted([items_df.iloc[i-1].name, item, items_df.iloc[i+1].name]) \
+        #             == [item, items_df.iloc[i-1].name, items_df.iloc[i+1].name] and \
+        #             item != items_df.iloc[i+1].name:
+        #         print(f"previous section has been referenced!!!!: check {item}")
+        #         print(items_df)
+        #     else:
+        #         pass
         ## Only cases left are getting table of contents, which can simply be deduped
         ## items_df = items_df.drop_duplicates(subset=['item'], keep='last')
         items_df = items_df[~items_df.index.duplicated(keep='last')]
 
-
-        # print("items df")
-        # print(items_df)
 
 
         starting_items = ['item1a', 'item7','item7a']

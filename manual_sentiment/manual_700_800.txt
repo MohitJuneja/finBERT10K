@@ -1,0 +1,16 @@
+ticker,filing_date,html_link
+AMP,2011-02-28,https://www.sec.gov/Archives/edgar/data/820027/0001047469-11-001543-index.html
+AMP,2012-02-24,https://www.sec.gov/Archives/edgar/data/820027/0001047469-12-001474-index.html
+AMP,2013-02-27,https://www.sec.gov/Archives/edgar/data/820027/0001047469-13-001718-index.html
+ABC,2001-12-28,https://www.sec.gov/Archives/edgar/data/1140859/0000011454-01-500032-index.html
+AME,2005-03-08,https://www.sec.gov/Archives/edgar/data/1037868/0000893220-05-000487-index.html
+AME,2006-03-06,https://www.sec.gov/Archives/edgar/data/1037868/0000893220-06-000448-index.html
+AME,2008-02-27,https://www.sec.gov/Archives/edgar/data/1037868/0000893220-08-000535-index.html
+AME,2013-02-21,https://www.sec.gov/Archives/edgar/data/1037868/0001193125-13-069307-index.html
+AMGN,1995-03-30,https://www.sec.gov/Archives/edgar/data/318154/0000318154-95-000008-index.html
+AMGN,1996-03-29,https://www.sec.gov/Archives/edgar/data/318154/0000318154-96-000002-index.html
+AMGN,2001-03-07,https://www.sec.gov/Archives/edgar/data/318154/0000898430-01-000873-index.html
+AMGN,2004-03-11,https://www.sec.gov/Archives/edgar/data/318154/0000950148-04-000549-index.html
+AMGN,2005-03-09,https://www.sec.gov/Archives/edgar/data/318154/0000950129-05-002159-index.html
+AMGN,2007-02-28,https://www.sec.gov/Archives/edgar/data/318154/0001193125-07-042586-index.html
+AMGN,2012-02-29,https://www.sec.gov/Archives/edgar/data/318154/0001193125-12-086670-index.html

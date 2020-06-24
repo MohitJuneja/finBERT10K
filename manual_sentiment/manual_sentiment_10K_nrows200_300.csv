@@ -1,0 +1,12 @@
+,ticker,filing_date,link,html_link,item1a,item7,item7a
+0,AES,2003-03-26,https://www.sec.gov/Archives/edgar/data/874761/0001047469-03-010240.txt,,,,
+1,AFL,2004-03-11,https://www.sec.gov/Archives/edgar/data/4977/0000004977-04-000030.txt,,,,
+2,AFL,2005-03-10,https://www.sec.gov/Archives/edgar/data/4977/0000004977-05-000049.txt,,,,
+3,AFL,2006-02-28,https://www.sec.gov/Archives/edgar/data/4977/0000004977-06-000036.txt,,,,
+4,AFL,2007-02-28,https://www.sec.gov/Archives/edgar/data/4977/0001104659-07-015014.txt,,,,
+5,A,2009-12-21,https://www.sec.gov/Archives/edgar/data/1090872/0001047469-09-010861.txt,,-0.46925653880455354,-0.13721614661221812,0.03379492229817532
+6,A,2010-12-20,https://www.sec.gov/Archives/edgar/data/1090872/0001047469-10-010499.txt,,-0.4443597489812637,0.10597663144024057,0.05325771420033071
+7,A,2011-12-16,https://www.sec.gov/Archives/edgar/data/1090872/0001047469-11-010124.txt,,-0.47904962917810534,0.22467879599854138,0.05241322991328187
+8,AKAM,2001-02-12,https://www.sec.gov/Archives/edgar/data/1086222/0000950135-01-000445.txt,,,0.024552294143383543,0.013117174086042004
+9,AKAM,2003-03-28,https://www.sec.gov/Archives/edgar/data/1086222/0000950135-03-002051.txt,,,,
+10,AKAM,2005-03-16,https://www.sec.gov/Archives/edgar/data/1086222/0000950135-05-001475.txt,,,,
