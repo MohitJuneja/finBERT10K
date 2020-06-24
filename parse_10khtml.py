@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from sentiment_func import item_sentiment_score
 from sp500project.parse_10k import get_10k_edgecase
+from rotating_proxies import proxy_get
 import requests
 import re
 from bs4 import BeautifulSoup, NavigableString, Tag
@@ -11,7 +12,7 @@ from sentiment_func import item_sentiment_score
 def find10Khtml(html_index):
     ## html_index: index page of edgar company's filings
 
-    r = requests.get(html_index)
+    r = proxy_get(html_index)
 
     index_soup = BeautifulSoup(r.text, 'html.parser')
 
@@ -34,7 +35,7 @@ def find10Khtml(html_index):
 
 
 def get_tags(html_link):
-    r = requests.get(html_link)
+    r = proxy_get(html_link)
     html_soup = BeautifulSoup(r.text, 'html.parser')
     tags_needed = []
     for tag in html_soup.find_all('b'):

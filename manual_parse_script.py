@@ -56,8 +56,7 @@ for index_row, row in df.iterrows():
             items_scores['item7a'] = None
     results = results.append({'ticker': ticker, 'filing_date': filing_date, 'link': text_link, **items_scores},
                              ignore_index=True)
-    print(f"finished {index_row}")
-    time.sleep(5)
+
 
 
 nrows = f"{nrows[0]}_{nrows[1]}"
