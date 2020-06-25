@@ -5,7 +5,7 @@ SEC filings are a great information source for investing. By estimating sentimen
 
 
 ### Methdology
-The repo scraps 10K and 10Q SEC filings of SP500 companies, runs sentiment analysis with [FinBERT](https://arxiv.org/pdf/1908.10063.pdf) on
+The repo scraps and cleans 10K and 10Q SEC filings of SP500 companies, runs sentiment analysis with [FinBERT](https://arxiv.org/pdf/1908.10063.pdf) on
   - Item 1A. Risk Factors 
   - Item 7. Management’s Discussion and Analysis of Financial Condition and Results of Operations Item
   - Item 7A. Quantitative and Qualitative Disclosures about Market Risk
