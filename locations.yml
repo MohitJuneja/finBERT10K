@@ -1,0 +1,3 @@
+model: models/classifier_model/finbert-sentiment
+cid_500_10k: sp500project/sec_ticker/cid_10k_500.csv
+manual: sp500project/required_manual
