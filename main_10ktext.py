@@ -17,11 +17,13 @@ pd.set_option('display.max_colwidth', -1)  # or 199
 parser = argparse.ArgumentParser(description='Sentiment analyzer')
 parser.add_argument('--starting_row', type=int, help='Starting row')
 parser.add_argument('--ending_row', type=int, help='Ending row')
+parser.add_argument('--proxy', action='store_true', help="use proxy")
+
 
 args = parser.parse_args()
 nrows = [args.starting_row,args.ending_row]
 
-proxy = True
+proxy = args.proxy
 
 with open(r'locations.yml') as file:
     locs = yaml.load(file, Loader=yaml.FullLoader)
