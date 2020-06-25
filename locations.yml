@@ -1,3 +1,6 @@
 model: models/classifier_model/finbert-sentiment
 cid_500_10k: sp500project/sec_ticker/cid_10k_500.csv
 manual: sp500project/required_manual
+manual_input: sp500project/required_manual/data/input/
+manual_output: sp500project/required_manual/data/output/
+sentiment_output: sp500project/data/output/

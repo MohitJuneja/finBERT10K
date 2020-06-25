@@ -15,13 +15,13 @@ def get_proxies(n_proxies):
     return proxies
 
 
-def proxy_get(url, n_proxies=20):
+def proxy_get(url, n_proxies=100):
     proxies = get_proxies(n_proxies)
     proxy_pool = cycle(proxies)
     for i in range(1, n_proxies+1):
         # Get a proxy from the pool
         proxy = next(proxy_pool)
-        print("Request #%d" % i)
+        # print("Request #%d" % i)
         try:
             response = requests.get(url, proxies={"http": proxy, "https": proxy})
             return response

@@ -1,0 +1,6 @@
+https://www.sec.gov/include/ticker.txt
+
+notes on google, using alphabet filing's for
+ google stock even tho subsidary google has its own filing, CIK#: 0001288776
+ also duplicating google's filing because both goog and googl (class C and class A) are in sp500
+

@@ -1,8 +1,9 @@
 import pandas as pd
+import yaml
 
 
-
-
+with open(r'locations.yml') as file:
+    locs = yaml.load(file, Loader=yaml.FullLoader)
 cid = pd.read_csv("sec_ticker/sec_ticker.csv", names=['ticker', 'cid'])
 cid['ticker'] = cid['ticker'].str.upper()
 

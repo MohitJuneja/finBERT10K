@@ -1,12 +1,10 @@
 import pandas as pd
 import numpy as np
-from sentiment_func import item_sentiment_score
-from sp500project.parse_10k import get_10k_edgecase
-from rotating_proxies import proxy_get
+from sp500project.funcs.rotating_proxies import proxy_get
 import requests
 import re
 from bs4 import BeautifulSoup, NavigableString, Tag
-from sentiment_func import item_sentiment_score
+from sp500project.funcs.get_sentiment import item_sentiment_score
 
 
 def find10Khtml(html_index):
