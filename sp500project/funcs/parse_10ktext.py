@@ -161,9 +161,9 @@ def get_10k(text_link, proxy=False):
 
 
 
-def get_10k_edgecase(text_link):
+def get_10k_edgecase(text_link, proxy=False):
     # r = requests.get('https://www.sec.gov/Archives/edgar/data/320193/000032019318000145/0000320193-18-000145.txt')
-    r = proxy_get(text_link)
+    r = requests.get(text_link) if not proxy else proxy_get(text_link)
     raw_10k = r.text
 
 

@@ -7,11 +7,10 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 from sp500project.funcs.get_sentiment import item_sentiment_score
 
 
-def find10Khtml(html_index):
+def find10Khtml(html_index, proxy=False):
     ## html_index: index page of edgar company's filings
 
-    r = proxy_get(html_index)
-
+    r = requests.get(html_index) if not proxy else proxy_get(html_index)
     index_soup = BeautifulSoup(r.text, 'html.parser')
 
     ## getting the index table
@@ -32,8 +31,8 @@ def find10Khtml(html_index):
     return html_10k_loc
 
 
-def get_tags(html_link):
-    r = proxy_get(html_link)
+def get_tags(html_link, proxy=False):
+    r = requests.get(html_link) if not proxy else proxy_get(html_link)
     html_soup = BeautifulSoup(r.text, 'html.parser')
     tags_needed = []
     for tag in html_soup.find_all('b'):
@@ -59,8 +58,8 @@ def get_text(start_tag, end_tag):
         curr_tag = curr_tag.next
     return " ".join(list(dict.fromkeys(li_text)))
 
-def get_items_score(html_link):
-    tags_needed = get_tags(html_link)
+def get_items_score(html_link, proxy=False):
+    tags_needed = get_tags(html_link, proxy=proxy)
     starting_items = ['item1a', 'item7', 'item7a']
     ending_items = ['item1b', 'item7a', 'item8']
 

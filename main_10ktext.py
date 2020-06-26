@@ -1,11 +1,6 @@
-
-from finbert.finbert import predict
-from pytorch_pretrained_bert.modeling import BertForSequenceClassification
-import argparse
 import pandas as pd
 import argparse
 import numpy as np
-from summa.summarizer import summarize
 from sp500project.funcs.parse_10ktext import get_10k
 from sp500project.funcs.get_sentiment import item_sentiment_score
 
@@ -33,7 +28,7 @@ cid_10k_500 = pd.read_csv(locs['cid_500_10k'], index_col=0)
 
 cid_10k_500 = cid_10k_500[(cid_10k_500['file']=='10-K')].iloc[nrows[0]:nrows[1]]
 
-sentiment = pd.DataFrame(columns=['ticker', 'filing_date', 'link', 'html_link', 'item1a', 'item7', 'item7a'])
+sentiment = pd.DataFrame(columns=['cid', 'ticker', 'filing_date', 'text_link', 'html_link', 'item1a', 'item7', 'item7a'])
 
 fail_links =[]
 for cid_idx, row in cid_10k_500.iterrows():
@@ -44,30 +39,28 @@ for cid_idx, row in cid_10k_500.iterrows():
     text_link = sec_prefix + text_loc
     html_link = sec_prefix + tml
 
-    results = {'ticker': ticker, 'filing_date': filing_date, 'text_link': text_link, 'html_link': html_link}
+    results = {'cid':cid_idx, 'ticker': ticker, 'filing_date': filing_date, 'text_link': text_link, 'html_link': html_link}
 
     dict_items = get_10k(text_link, proxy=proxy)
 
     print(cid_idx)
 
-    if isinstance(dict_items, str):
+    if isinstance(dict_items, str) or not dict_items:
         fail_links.append((cid, ticker, filing_date, html_link, text_link))
-
-    elif not dict_items:
-        fail_links.append((cid, ticker, filing_date, html_link, text_link))
+        results['item1a'] = results['item7'] = results['item7a'] = None
 
     else:
-        for name, txt in dict_items.items():
+        for item_name, txt in dict_items.items():
             # print(name)
-            results[name] = item_sentiment_score(txt)
+            results[item_name] = item_sentiment_score(txt)
 
-        sentiment = sentiment.append(results, ignore_index=True)
+    sentiment = sentiment.append(results, ignore_index=True)
 
 
 
 nrows = f"{nrows[0]}_{nrows[1]}"
 sentiment.to_csv(f"{locs['sentiment_output']}/sentiment_10K_nrows{nrows}.csv")
-pd.DataFrame(fail_links, columns=['ticker', 'filing_date', 'html_link', 'text_link'])\
+pd.DataFrame(fail_links, columns=['cid', 'ticker', 'filing_date', 'html_link', 'text_link'])\
     .to_csv(f"{locs['manual_input']}/manual_{nrows}.csv")
 
 # if txt == "missing items":
