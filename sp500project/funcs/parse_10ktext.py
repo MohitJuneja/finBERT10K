@@ -202,12 +202,15 @@ def get_10k_edgecase(text_link, proxy=False):
     regex_item = re.compile(r'((Item|ITEM)\s7\.\s{0,3}MANAGEMENT\'S)|'
                             r'((Item|ITEM)\s8\.\s{0,3}CONSOLIDATED)|'
                             r'((Item|ITEM)\s7A\.\s{0,3}QUANTITATIVE)|'
-                            r'((Item|ITEM)\s1A\.\s{0,3}RISK)')
-
+                            r'((Item|ITEM)\s1A\.\s{0,3}RISK)|'
+                            r'((Item|ITEM)\s{0,3}(1A|1a|7|7A|7a|8))')
 
     ## find item section
-    items_matches = regex_item.finditer(document['10-K'])
-    items_df = pd.DataFrame([(x.group(), x.start(), x.end()) for x in items_matches])
+    try:
+        items_matches = regex_item.finditer(document['10-K'])
+        items_df = pd.DataFrame([(x.group(), x.start(), x.end()) for x in items_matches])
+    except Exception:
+        return text_link
 
 
     desired_items = {}
@@ -256,6 +259,9 @@ def get_10k_edgecase(text_link, proxy=False):
 
 
         items_df = items_df[~items_df.index.duplicated(keep='first')]
+
+        # print("final items_df")
+        # print(items_df)
 
 
 

@@ -23,11 +23,16 @@ def find10Khtml(html_index, proxy=False):
 
         l.append(row + links)
     index_content_tbl = pd.DataFrame(l, columns=["Seq", "Description", "Document", "Type", "Size", "link"])
+
     index_content_tbl["Description"] = index_content_tbl["Description"].str[0]
+    index_content_tbl["Type"] = index_content_tbl["Type"].str[0]
+    # print(index_content_tbl)
 
     ## get html link by finding description is 10K
     # html_10k_loc =  index_content_tbl.loc[index_content_tbl['Description']=='10-K', 'link']
-    html_10k_loc =  index_content_tbl[index_content_tbl['Description'].str.match(r'(10-{0,1}(K|k))')==True]['link'].values
+    html_10k_loc = index_content_tbl[(index_content_tbl['Description'].str.contains(r'(10-{0,1}(K|k))') == True) &
+                                     (index_content_tbl['Type'].str.contains(r'(10-{0,1}(K|k))') == True)]['link'].values
+    html_10k_loc = [x for x in html_10k_loc if x.endswith('.htm')]
     return html_10k_loc
 
 

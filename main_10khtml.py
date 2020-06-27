@@ -31,13 +31,14 @@ sec_prefix = "https://www.sec.gov/Archives/"
 
 
 
-results = pd.DataFrame(columns=['ticker','filing_date','link','html_link','item1a','item7','item7a'])
+results = pd.DataFrame(columns=['ticker','filing_date',
+                                'link','html_link',
+                                'html_index', 'item1a','item7','item7a'])
 
 for index_row, row in df.iterrows():
     ## Looping through each html, text link to find 10k
     ticker, filing_date, html_index, _, _, _, _, _, text_loc, _ = row
     text_link = sec_prefix + text_loc
-    html_index = sec_prefix + html_index
     print(f"html index page: {html_index}")
     html_10k_loc = find10Khtml(html_index, proxy=proxy)
     print(f"html 10k loc: {html_10k_loc}")
@@ -63,7 +64,9 @@ for index_row, row in df.iterrows():
             items_scores['item1a'] = None
             items_scores['item7'] = None
             items_scores['item7a'] = None
-    results = results.append({'ticker': ticker, 'filing_date': filing_date, 'link': text_link, **items_scores},
+    results = results.append({'ticker': ticker, 'filing_date': filing_date,
+                              'link': text_link,'html_link': html_10k_loc,
+                              'html_index': html_index, **items_scores},
                              ignore_index=True)
 
 

@@ -3,8 +3,14 @@ import numpy as np
 def _rank_dedup(df):
     m = df['item'].shift() > df['item']
     dfs = [df for _, df in df.groupby(m.cumsum())]
-    diff_sum = [(np.sum(df['st'].diff(1)), i) for i, df in enumerate(dfs)]
+    item_dedup = [df.drop_duplicates(['item'], keep='first') for df in dfs]
+    # print(item_dedup)
+    ## get first diff of each unique roe of item
+    diff_sum = [(np.sum(df['st'].diff(1)), i) for i, df in enumerate(item_dedup)]
+    ## take the df with the largest sum of diff
     take_df = sorted(diff_sum, key=lambda x:x[0])[-1]
+
+
     return dfs[take_df[1]]
 
 def dedup(items_df):
