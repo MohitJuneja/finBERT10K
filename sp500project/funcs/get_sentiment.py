@@ -3,7 +3,7 @@ from pytorch_pretrained_bert.modeling import BertForSequenceClassification
 import pandas as pd
 import numpy as np
 from summa.summarizer import summarize
-
+import os
 
 
 def item_sentiment_score(item_txt):

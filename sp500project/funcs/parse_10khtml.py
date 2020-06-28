@@ -42,17 +42,15 @@ def get_tags(html_link, proxy=False):
     tags_needed = []
     for tag in html_soup.find_all('b'):
         if tag.find(string=re.compile(r'(Item|ITEM)\s{1,6}(1A|1B|7|7A|8)\.')):
-            print('b')
             tags_needed.append(tag)
     ## at least 3 tags, item 7, item 7a and item 8
+    ## will try different tags if not
     if len(tags_needed) < 3:
         tags_needed = []
         for tag in html_soup.find_all('font'):
             if tag.find(string=re.compile(r'(Item|ITEM)\s{1,6}(1A|1B|7|7A|8)\.')):
-                print('font')
                 tags_needed.append(tag)
 
-    print(f"legnth: {len(tags_needed)}")
     if len(tags_needed) < 3:
         tags_needed = []
         for tag in html_soup.find_all('a'):
@@ -60,13 +58,12 @@ def get_tags(html_link, proxy=False):
                 if re.match(r'(Item|ITEM)\s+(1A|1B|7|7A|8)', tag.string):
                     tags_needed.append(tag)
 
-    print("tags needed")
-    print(tags_needed)
     return tags_needed
 
 
 def clean_item_title(tag):
-    return re.sub(r"\xa0|\n|\s|\.", u"", re.search(r"(Item|ITEM)\s{1,6}(1A|1B|7|7A|8)\.", tag.get_text()).group(0)).lower()
+    tag = re.sub(r"\xa0|\n|\s|\.", u"", tag.get_text()).lower()
+    return re.sub(r"riskfactors|unresolvedstaffcomments", u"", tag).lower()
 
 
 def get_text(start_tag, end_tag):
@@ -88,6 +85,8 @@ def get_items_score(html_link, proxy=False):
                        'item8': 'item9'}  ## this happens if the ending item cannot be found and the next next item is used as a replacement
 
     clean_tags = [clean_item_title(tag) for tag in tags_needed]
+
+
 
     ## don't need to worry duplicates as dict takes last value as key
     clean_tags2tags = dict(zip(clean_tags, tags_needed))
