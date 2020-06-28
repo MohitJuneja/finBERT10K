@@ -9,7 +9,9 @@ from summa.summarizer import summarize
 def item_sentiment_score(item_txt):
     if item_txt=="missing items":
         return item_txt
+
     else:
+        item_txt = item_txt.replace('\n', ' ')
         model = BertForSequenceClassification.from_pretrained('models/classifier_model/finbert-sentiment',
                                                                               num_labels=3, cache_dir=None)
         sentiment_df = predict(item_txt,model,write_to_csv=False)

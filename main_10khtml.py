@@ -36,28 +36,31 @@ results = pd.DataFrame(columns=['ticker','filing_date',
                                 'html_index', 'item1a','item7','item7a'])
 
 for index_row, row in df.iterrows():
+    print(index_row)
     ## Looping through each html, text link to find 10k
     ticker, filing_date, html_index, _, _, _, _, _, text_loc, _ = row
     text_link = sec_prefix + text_loc
-    print(f"html index page: {html_index}")
+    # print(f"html index page: {html_index}")
     html_10k_loc = find10Khtml(html_index, proxy=proxy)
-    print(f"html 10k loc: {html_10k_loc}")
-    print(f"index row: {index_row}")
+    # print(f"html 10k loc: {html_10k_loc}")
+    # print(f"index row: {index_row}")
 
     if len(html_10k_loc) >0:
-        print(f"raw html link: {html_10k_loc[0]}")
+        # print(f"raw html link: {html_10k_loc[0]}")
         html_10k_loc = "https://www.sec.gov" + html_10k_loc[0]
-        print(f"with sec prefix html link: {html_10k_loc}")
+        # print(f"with sec prefix html link: {html_10k_loc}")
         items_scores = get_items_score(html_10k_loc, proxy=proxy)
     else:
         ## there's no html 10k, use text instead
-        print(f"text link:{text_link}")
+        # print(f"text link:{text_link}")
         desired_items = get_10k_edgecase(text_link, proxy=proxy)
         items_scores = {}
+
         ## desired_items can return None if no items are found in text, but it should not
         if desired_items is not None:
             for item, item_text in desired_items.items():
                 items_scores[item] = item_sentiment_score(item_text)
+                 # print(f"{item} score: {items_scores[item]}")
 
         ## this mean even for text file we could not find the items
         else:
