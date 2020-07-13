@@ -57,7 +57,7 @@ for index_row, row in df.iterrows():
         items_scores = {}
 
         ## desired_items can return None if no items are found in text, but it should not
-        if isinstance(desired_items, dict):
+        if desired_items is not None:
             for item, item_text in desired_items.items():
                 items_scores[item] = item_sentiment_score(item_text)
                  # print(f"{item} score: {items_scores[item]}")

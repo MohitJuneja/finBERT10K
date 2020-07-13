@@ -33,3 +33,17 @@ def item_sentiment_score(item_txt):
             else:
                 return "full_text is empty"
             pass
+        
+def sentences_rank(item_txt):
+    if item_txt=="missing items":
+        return item_txt
+
+    else:
+        item_txt = item_txt.replace('\n', ' ')
+
+        try:
+            return pd.DataFrame(summarize(item_txt, ratio=1.0, scores=True), columns=['sentence', 'w']).sort_values("w", ascending=False)
+
+        except Exception as e:
+            print(e)
+            pass

@@ -3,8 +3,12 @@ data/
 # Data Files
 *.csv
 *.tsv
+keys/
+testing_csv/
+
 # model
 *.bin
+
 
 
 # Distribution / packaging

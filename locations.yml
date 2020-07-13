@@ -4,3 +4,6 @@ manual: sp500project/required_manual
 manual_input: sp500project/required_manual/data/input/
 manual_output: sp500project/required_manual/data/output/
 sentiment_output: sp500project/data/output/
+final_sentiment: sp500project/data/output/sentiment_10k_final.csv
+hist_price: sp500project/data/price/sp500_price_20200702.pkl
+rebal: sp500project/data/price/RebalanceDates.csv
